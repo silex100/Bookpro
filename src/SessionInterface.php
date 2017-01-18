@@ -33,12 +33,12 @@ interface SessionInterface
     * @param $key
     * @param $msg
     */
-   public static function setFlash($key, $msg);
+   public  function setFlash($key, $msg);
 
    /** 
     * Varify if the key flahs exist
     * 
     * @param $key
     */
-   public static function hasFlashes($key);
+   public static  function hasFlashes($key);
 }

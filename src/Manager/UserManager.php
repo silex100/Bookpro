@@ -25,7 +25,7 @@
      public function __construct(Connection $connection)
      {
          $this->connection = $connection;
-         parent::init($this->connection);
+         parent::__construct($this->connection);
      }
 
      public function  getAllUsers(){
