@@ -13,34 +13,37 @@ namespace Bookpro\Database;
  */
 abstract class DatabaseAbstract
 {
-    /**
-     * @var $db static; Should allow connection Mysql, same for all subclasses
-     */
-     private static $db;
-
-     /**
-      * @var $table array, Array of tables for subclases
-      */
-     private static $table = [];
      
      /**
-      * @method initialize
+      * @var $database static; Should allow connection Mysql, same for all subclasses
       */
-      /* public static function init($classname, $table, $db=false){
-          if(!($db===false))self::$db=$db;
-          self::$table[$classname] = $table;
-      } */
-
-      public static function init($db=false){if(!($db===false))self::$db=$db;}
+      private static $database;
 
       /**
-       * @return $db
+       * @var $table array, Array of tables for subclases
        */
-       public static function getDb() { return self::$db; }
+      private static $table = [];
+
+      /**
+       *  Contructor
+       */
+      public function __construct($database = false){
+          self::init($database);
+      }
+     
+      /**
+       * @method initialize
+       */
+      public static function init($database=false){if(!($database===false))self::$database=$database;}
 
        /**
-       * @return $table
-       */
+        * @return $database
+        */
+       public static function getdatabase() { return self::$database; }
+
+       /**
+        * @return $table
+        */
        public static function getTable($classname) { return self::$table[$classname]; }
 
        /**
@@ -51,8 +54,8 @@ abstract class DatabaseAbstract
         *
         * @return $object type
         */
-       public static function fetchFromDB($stmt, $table){
-           return static::getDb()->query($stmt)->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $table);
+       public static function fetchFromdatabase($stmt, $table){
+           return static::getdatabase()->query($stmt)->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $table);
        }
 
        /**
@@ -61,7 +64,7 @@ abstract class DatabaseAbstract
         * @param string , $stmt
         */
        public static function queryAssoc($stmt){
-           return static::getDb()->query($stmt)->fetchAll(\PDO::FETCH_ASSOC);
+           return static::getdatabase()->query($stmt)->fetchAll(\PDO::FETCH_ASSOC);
        }
 
        /**
@@ -83,21 +86,21 @@ abstract class DatabaseAbstract
                         $type = \PDO::PARAM_STR;
                 }
            }
-           static::getDb()->bindValue($parameter, $value, $type);
+           static::getdatabase()->bindValue($parameter, $value, $type);
        }
 
        /**
         *  Begin Transaction
         */
        public static function beginTransaction(){
-			static::getDb()->beginTransaction();
+			static::getdatabase()->beginTransaction();
 	   }
 
        /**
         * @return array
         */
        public  static function prepareBy($stmt, $value){
-           $q = static::getDb()->prepare($stmt);
+           $q = static::getdatabase()->prepare($stmt);
 		   $q->execute([$value]);
 		   $row = $q->fetch(\PDO::FETCH_ASSOC);
            return $row;

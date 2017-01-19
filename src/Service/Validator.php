@@ -8,21 +8,29 @@
 
 namespace Bookpro\Service;
 
+use Bookpro\SessionInterface;
+
 /**
  * Class Validator
  */
 class Validator{
 
     /**
-     * @var data
+     * @var $data
      */
     private $data;
 
     /**
+     * @var $session  
+     */
+    private $session;
+
+    /**
      * Constructor
      */
-    public function  __construct($data = []){
+    public function  __construct($data= [], SessionInterface $session){
         $this->data = $data;
+        $this->session = $session;
     }
 
     /**
@@ -66,6 +74,7 @@ class Validator{
      */
     public function isPassword($field){
          if(strlen($this->getField($field))<5 || empty($this->getField($field))){
+            $this->session->setFlashType('danger','password', "Your password is not valide.");
             return false;
         }
         return true;
@@ -79,6 +88,7 @@ class Validator{
         if($this->isLogin($identifiant) || $this->isEmail($identifiant)){
             return true;
         }
+        $this->session->setFlashType('danger','identifiant', "Please put your email or your login.");
         return false;
     }
 }

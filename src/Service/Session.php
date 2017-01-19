@@ -47,14 +47,16 @@ class Session implements SessionInterface
       /**
        * Set session Flash
        */
-      public static function setFlash($key, $msg){
+      public  function setFlash($key, $msg){
           $_SESSION['flash'][$key] = $msg;
       }
 
       /**
        * Return flash $key
+       *
+       * @return flash $key
        */
-      public static function getFlashes(){
+      public static  function getFlashes(){
          $flashes = $_SESSION['flash'];
          unset($_SESSION['flash']);
          return $flashes;
@@ -63,12 +65,12 @@ class Session implements SessionInterface
       /**
        * Return a boolean
        *
-       * @param string|null , should contains $key like parameter
+       * @param string|null , should contains $type like parameter
        *
        * @return $bool
        */
-      public static function hasFlashes($key){
-          return isset($_SESSION['flash'][$key]);
+      public static  function hasFlashes($type){
+          return isset($_SESSION['flash'][$type]);
       }
 
       /**
@@ -91,5 +93,69 @@ class Session implements SessionInterface
       public  static function read($key){
           return isset($_SESSION[$key]) ? $_SESSION[$key]: 'null';
       }
-}
+
+      /**
+       *   Example login
+       * 
+       *   $_SESSION['flash']['sucess']['login'] = $msg 
+       *   $_SESSION['flash']['danger']['login'] = $msg 
+       *   $_SESSION['flash']['warning']['login'] = $msg 
+       *   $_SESSION['flash']['info']['login'] = $msg
+       *
+       *   @param type d'info [ success, danger, warning, info]
+       *   @param $key
+       *   @param $msg
+       * 
+       */
+       public function setFlashType($type, $key, $msg =false){
+           $_SESSION['flash'][$type][$key] = $msg;
+       }
+
+       /**
+        * Return flash type success
+        *
+        * @return flash success
+        */
+       public static function getSuccess(){
+           $success = $_SESSION['flash']['success'];
+           unset($_SESSION['flash']['success']);
+           return $success;
+       }
+      
+      /**
+       * Return flash danger
+       *
+       * @return flash danger
+       */
+      public static function getDanger(){
+
+          $danger = $_SESSION['flash']['danger'];
+          unset($_SESSION['flash']['danger']);
+          return $danger;
+      }
+
+      /**
+       * Return flash warning
+       *
+       * @return flash warning
+       */
+      public static function getWarning(){
+          $warning = $_SESSION['flash']['warning'];
+          unset($_SESSION['flash']['warning']);
+          return $warning;
+      }
+
+      /**
+       * Return flash info
+       *
+       * @return flash info
+       */
+      public function getInfo(){
+          $info = $_SESSION['flash']['info'];
+          unset($_SESSION['flash']['info']);
+          return $info;
+      }
+
+
+  }
   
