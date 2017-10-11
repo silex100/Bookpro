@@ -44,23 +44,30 @@ class Session implements SessionInterface
           }
       }
 
-      /**
-       * Set session Flash
-       */
-      public  function setFlash($key, $msg){
-          $_SESSION['flash'][$key] = $msg;
-      }
 
       /**
        * Return flash $key
        *
-       * @return flash $key
+       * @return $key
        */
-      public static  function getFlashes(){
-         $flashes = $_SESSION['flash'];
-         unset($_SESSION['flash']);
-         return $flashes;
+      public static  function getKey($key){
+         if(self::hasKey($key)){
+             return $_SESSION[$key];
+         }
       }
+
+       /**
+       * Return a boolean
+       *
+       * @param string|null , should contains $type like parameter
+       *
+       * @return $bool
+       */
+      public static  function hasKey($key){
+          return isset($_SESSION[$key]);
+      }
+
+
 
       /**
        * Return a boolean
@@ -79,20 +86,10 @@ class Session implements SessionInterface
        * @param string | null, should be the key of the our parametre
        * @param string | null , and second parameter like  valeur
        */
-      public static function write($key, $value){
+      public function write($key, $value){
           $_SESSION[$key] = $value;
       }
 
-      /** 
-       * Return of the value via key
-       *
-       * @param string | null, should contains $key
-       *
-       * @return $_SESSION[$key]
-       */
-      public  static function read($key){
-          return isset($_SESSION[$key]) ? $_SESSION[$key]: 'null';
-      }
 
       /**
        *   Example login
@@ -112,50 +109,76 @@ class Session implements SessionInterface
        }
 
        /**
-        * Return flash type success
-        *
-        * @return flash success
-        */
-       public static function getSuccess(){
-           $success = $_SESSION['flash']['success'];
-           unset($_SESSION['flash']['success']);
-           return $success;
-       }
-      
-      /**
-       * Return flash danger
-       *
-       * @return flash danger
-       */
-      public static function getDanger(){
-
-          $danger = $_SESSION['flash']['danger'];
-          unset($_SESSION['flash']['danger']);
-          return $danger;
-      }
-
-      /**
-       * Return flash warning
-       *
-       * @return flash warning
-       */
-      public static function getWarning(){
-          $warning = $_SESSION['flash']['warning'];
-          unset($_SESSION['flash']['warning']);
-          return $warning;
-      }
-
-      /**
        * Return flash info
        *
-       * @return flash info
+       * @return flash type
        */
-      public function getInfo(){
-          $info = $_SESSION['flash']['info'];
-          unset($_SESSION['flash']['info']);
-          return $info;
+      public  static function getFlashesType($type){
+          $valeur = $_SESSION['flash'][$type];
+          unset($_SESSION['flash'][$type]);
+          return $valeur;
       }
 
+      /**
+       *
+       * @param string | null type d'info [ success, danger, warning, info]
+       *
+       * @return flash message
+       */
 
-  }
+       public static function Display($type){
+           $html = null;
+           if(isset($type)){
+               if(Session::hasFlashes($type)){
+                   $html.="<div class=\"alert alert-$type\">";
+                   $html.="<ul>";
+                         foreach(Session::getFlashesType($type) as $flashe_type){
+                              $html.="<li>".$flashe_type."</li>";
+                         }
+                   $html.="</ul>";
+                   $html.="</div>";
+               }
+               echo ($html);
+           }
+       }
+
+       /**
+        * Display Flash by message
+        *
+        */
+      public static function flashes (){
+           if(Session::hasFlashes("success")) static::Display("success");
+           if(Session::hasFlashes("danger")) static::Display("danger");
+           if(Session::hasFlashes("warning")) static::Display("warning");
+           if(Session::hasFlashes("info")) static::Display("info");
+       }
+
+       /**
+        * 
+        * Remove variable in session via key
+        */
+       public static function remove($key){
+           unset($_SESSION[$key]);
+       }
+
+       /**
+        * Put a message Flash
+        * @param $key
+        * @param $msg
+        */
+      public function setFlash($key, $message){
+          $_SESSION['flash'][$key] = $msg;
+      }
+
+      /**
+       * Return ALL flash info
+       *
+       * @return All exists
+       */
+      public  static function getFlashes(){
+         $flash = $_SESSION['flash'];
+         unset($_SESSION['flash']);
+         return $flash;
+      }
+}
   

@@ -8,13 +8,11 @@
  
  namespace Bookpro\Model;
 
- use Bookpro\UserInterface;
-
 /**
- * Class User
+ * Class abstract User
  *
  */
- class User implements UserInterface
+ abstract class User 
  {
       /**
        * @var int | null , id of the User
@@ -42,6 +40,41 @@
       protected $_email;
 
       /**
+       * @var string| null , $_nom of the Etudiant
+       */
+      protected $_nom ;
+
+     /**
+      * @var string| null, $_prenom of the etudiant
+      */
+     protected $_prenom;
+
+     /**
+      * @var date| null, $_datebirth of the etudiant
+      */
+      protected $_datebirth;
+
+     /**
+      * @var year| null, $_$annees of the etudiant
+      */
+     protected $_annees;
+
+     /**
+      * @var string| null, $_adresse of the etudiant
+      */
+     protected $_adresse;
+    
+     /**
+      * @var string| null, $_ville of the etudiant
+      */
+     protected $_ville;
+
+     /**
+      * @var  integer| null, $_cp of the etudiant
+      */
+     protected $_cp;
+
+      /**
        * Constructor
        */
       public function  __construct(array $data){
@@ -51,7 +84,7 @@
       /**
        * Hydrate 
        */
-      protected function hydrate(array $data){
+      private function hydrate(array $data){
           foreach($data as $key=> $value){
               $method ='set'.ucfirst($key);
               if(method_exists($this,$method)){
@@ -70,7 +103,7 @@
       
       /**
        * Set the id of the User
-       * @return  $id
+       *@param$id
        */
        public function setId($id){
           $this->_id = (int) $id;
@@ -81,7 +114,7 @@
        * @return $_login
        */
       public function getLogin(){
-          return $this->_login;
+          return($this->_login);
       }
 
 
@@ -114,7 +147,7 @@
        * @return $_role
        */
       public function getRole(){
-          return $_role;
+          return  $this->_role;
       }
 
       /**
@@ -130,7 +163,7 @@
        * @return $_role
        */
       public function getEmail(){
-          return $_email;
+          return $this->_email;
       }
 
       /**
@@ -138,11 +171,118 @@
        * @param $_role
        */
       public function setEmail($email){
-         $this->_email= isset($email)? $email : null;
+         $this->_email=isset($email)?$email : null;
       }
 
       /**
-       * Destructor
-       */
-      public function __destruct(){}
+     * Return  the nom of etudiant
+     * @return $_nom
+     */
+    public function getNom(){
+         return $this->_nom;
+    }
+
+    /**
+     * Return  the prenom of etudiant
+     * @return $_prenom
+     */
+    public function getPrenom(){
+         return $this->_prenom;
+    }
+
+    /**
+     * Return  the datebirth of etudiant
+     * @return $_datebirth
+     */
+    public function getDateBirth(){
+         return $this->_datebirth;
+    }
+
+    /**
+     * Return  the annees
+     * @return $_annees
+     */
+    public function getAnnees(){
+         return $this->_annees;
+    }
+
+    /**
+     * Return  the adresse
+     * @return $_adresse
+     */
+    public function getAdresse(){
+         return $this->_adresse;
+    }
+
+    /**
+     * Return  the ville
+     * @return $_ville
+     */
+    public function getVille(){
+         return $this->_ville;
+    }
+
+    /**
+     * Return  the cp
+     * @return $_cp
+     */
+    public function getCp(){
+         return $this->_cp;
+    }
+
+    /**
+     * Set the login of the Etudiant
+     * @param $nom
+     */
+    public function setNom($nom){
+         $this->_nom = isset($nom)? $nom : null;
+    }
+
+    /**
+     * Set the prenom of the Etudiant
+     * @param $prenom
+     */
+    public function setPrenom($prenom){
+         $this->_prenom = isset($prenom)? $prenom : null;
+    }
+
+    /**
+     * Set the Datebirth of the Etudiant
+     * @param $datebirth
+     */
+    public function setDatebirth($datebirth){
+         $this->_datebirth = isset($datebirth)? $datebirth : null;
+    }
+
+    /**
+     * Set the annees of the User
+     * @param $annees
+     */
+    public function setAnnees($annees){
+         $this->_annees = isset($annees)? $annees : null;
+    }
+
+    /**
+     * Set the adresse of the user
+     * @param $adresse
+     */
+    public function setAdresse($adresse){
+         $this->_adresse = isset($adresse)? $adresse : null;
+    }
+
+    /**
+     * Set the  ville of the Etudiant
+     * @param $ville
+     */
+    public function setVille($ville){
+         $this->_ville = isset($ville)? $ville : null;
+    }
+
+    /**
+     * Set the  ville of the Etudiant
+     * @param $codepostal
+     */
+    public function setCp($codepostal){
+         $this->_cp = isset($codepostal)? $codepostal : null;
+    }
  }

@@ -8,10 +8,12 @@
 
  namespace Bookpro;
 
+ use Bookpro\RoleInterface;
+
  /**
   * Interface AuthentificationInterface
   */
-interface AuthentificationInterface {
+interface AuthentificationInterface extends RoleInterface {
     /**
      * Allows to connect
      * 

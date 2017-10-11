@@ -1,0 +1,64 @@
+@font-face {
+	font-family: 'Agency FB';
+	src: url('./fonts/AgencyFB.ttf');
+	font-weight: normal;
+    font-style: normal;
+}
+
+html,body,main,article, aside, div,form {
+    font-family:'Agency FB';
+    font-size: 1em;
+}
+
+div.row article{
+    font-size: 1.5em;
+}
+form h4{
+    font-size: 2em;
+}
+form div.form-group label{
+    font-size: 1.5em;
+}
+form div.form-group input, form div.form-group select, div.form-group a,form button[type=submit]{
+    font-size: 1.5em;
+    box-sizing: border-box;
+}
+
+a#titre-header{
+    font-family:'Agency FB';
+    font-size: 2.2em;
+}
+
+form h4{
+    font-family:'Agency FB';
+}
+
+nav a , aside a{
+    font-size: 1.2em;
+}
+
+table thead tr th{
+    background-color:#306FA4;
+    color: #fff;
+    font-size: 1.2em;
+}
+table tbody tr td{
+    font-size: 1.2em;
+}
+
+div.btn-ajouter h3  {
+    border:1px solid #306FA4;
+    width:250px;
+}
+
+div.btn-ajouter h3 a span.btn{
+    font-size: 1em;
+ }
+
+aside  div.px-heading{
+    font-size: 1.5em;
+}
+
+table.tableNoneborder tr{
+    border:none;
+}

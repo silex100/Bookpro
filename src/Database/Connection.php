@@ -43,6 +43,11 @@
       */
 	 private $password;
 
+     /**
+      * @var string|null should contains the password database of conncetion database
+      */
+	 private static $db;
+
      public function __construct()
      {
         $this->engine = DB_ENGINE;
@@ -53,4 +58,9 @@
         $dns = $this->engine.':dbname='.$this->database.";host=".$this->hostname; 
         parent::__construct( $dns, $this->username, $this->password);
      }
+
+     public static function Database(){
+			if(is_null(static::$db)){static::$db = new self();}
+			return static::$db;
+		}
  }
